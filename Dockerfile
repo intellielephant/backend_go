@@ -1,8 +1,8 @@
 FROM golang:1.23-alpine AS builder
 
-# ENV GO111MODULE=on \
-#    GOPROXY=https://goproxy.cn,direct \
-#    GIN_MODE=release
+ENV GO111MODULE=on \
+   GOPROXY=https://goproxy.cn,direct \
+   GIN_MODE=release
 
 # ENV mysqlAddress=172.17.0.1
 
