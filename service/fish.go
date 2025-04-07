@@ -18,7 +18,7 @@ func AddGoods(name string, category int, price float64, image_url string) (*mode
 	return dao.AddGoods(&goods)
 }
 
-func GetGoods() ([]*model.Goods, error) {
+func GetGoods() ([]*model.GoodsWithCategory, error) {
 	return dao.GetGoods()
 }
 

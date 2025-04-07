@@ -20,6 +20,11 @@ type Goods struct {
 	Updated_at time.Time `json:"updated_at"`
 }
 
+type GoodsWithCategory struct {
+	Goods
+	CategoryName string `json:"category_name"`
+}
+
 type FishOrder struct {
 	Id         int       `gorm:"primaryKey"`
 	Name       string    `json:"name"`

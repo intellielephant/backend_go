@@ -11,11 +11,14 @@ func AddGoods(goods *model.Goods) (*model.Goods, error) {
 	return goods, tx.Error
 }
 
-func GetGoods() ([]*model.Goods, error) {
-	var goods []*model.Goods
-	tx := global.DBLittleFish.Table("goods").Where("status = ?", 0).Find(&goods)
+func GetGoods() ([]*model.GoodsWithCategory, error) {
+	var goodsWithCategory []*model.GoodsWithCategory
+	tx := global.DBLittleFish.Table("goods").
+		Select("goods.id, goods.name, goods.status, goods.category, goods.price, goods.image_url, category.name as category_name").
+		Joins("left join category on category.id = goods.category").
+		Where("goods.status = ?", 0).Find(&goodsWithCategory)
 
-	return goods, tx.Error
+	return goodsWithCategory, tx.Error
 }
 
 func AddOrder(order *model.FishOrder, goods_list []map[string]interface{}) (*model.FishOrder, []*model.OrderGoods, error) {
