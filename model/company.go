@@ -39,13 +39,3 @@ type Notes struct {
 	Created_at time.Time `json:"created_at"`
 	Updated_at time.Time `json:"updated_at"`
 }
-
-type Goods struct {
-	Id         int       `gorm:"primaryKey"`
-	Store_id   int       `json:"store_id"`
-	Note_id    int       `json:"note_id"`
-	Title      string    `json:"title"`
-	Status     int       `json:"status"`
-	Created_at time.Time `json:"created_at"`
-	Updated_at time.Time `json:"updated_at"`
-}

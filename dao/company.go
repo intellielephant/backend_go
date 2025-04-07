@@ -22,16 +22,3 @@ func CreateNote(note *model.Notes) (*model.Notes, error) {
 
 	return note, tx.Error
 }
-
-func CreateGoods(goods *model.Goods) (*model.Goods, error) {
-	tx := global.DBLittleIn.Create(&goods)
-
-	return goods, tx.Error
-}
-
-func SelectGoods(page_size, page_index int) (*[]model.Goods, error) {
-	var goods []model.Goods
-	tx := global.DBLittleIn.Table("goods").Limit(page_size).Offset((page_index-1)*page_size).Where("status = ?", 0).Scan(&goods)
-
-	return &goods, tx.Error
-}

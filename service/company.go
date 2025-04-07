@@ -42,21 +42,6 @@ func CreateNote(store_id int, name string) (*model.Notes, error) {
 	return dao.CreateNote(&note)
 }
 
-func CreateGoods(store_id, note_id int, title string) (*model.Goods, error) {
-	var goods model.Goods
-	goods.Store_id = store_id
-	goods.Note_id = note_id
-	goods.Title = title
-	goods.Status = 0
-	goods.Created_at = time.Now()
-	goods.Updated_at = time.Now()
-	return dao.CreateGoods(&goods)
-}
-
-func SelectGoods(page_size, page_index int) (*[]model.Goods, error) {
-	return dao.SelectGoods(page_size, page_index)
-}
-
 func GenCompanyNo() string {
 	return global.RandomString(10)
 }

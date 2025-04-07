@@ -56,7 +56,7 @@ func SetupDBFish() error {
 	dbName := "fish"
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:3306)/%s?parseTime=true", userName, password, dbAddress, dbName)
 
-	DBAI, err = gorm.Open(mysql.New(mysql.Config{
+	DBLittleFish, err = gorm.Open(mysql.New(mysql.Config{
 		DriverName: "mysql",
 		DSN:        dsn,
 	}), &gorm.Config{

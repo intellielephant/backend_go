@@ -3,9 +3,35 @@ package dao
 import (
 	"backend-svc-go/global"
 	"backend-svc-go/model"
+	"time"
 )
 
-func AddGoods(goods *model.FishGoods) (*model.FishGoods, error) {
+func AddGoods(goods *model.Goods) (*model.Goods, error) {
 	tx := global.DBLittleFish.Create(&goods)
 	return goods, tx.Error
+}
+
+func AddOrder(order *model.FishOrder, goods_list []map[string]interface{}) (*model.FishOrder, []*model.OrderGoods, error) {
+	tx := global.DBLittleFish.Create(&order)
+
+	if tx.Error != nil {
+		return order, nil, tx.Error
+	}
+
+	var order_goods []*model.OrderGoods
+	for _, goods := range goods_list {
+		var order_good model.OrderGoods
+		order_good.OrderId = order.Id
+		order_good.GoodsId = goods["goods_id"].(int)
+		order_good.Number = goods["number"].(int)
+		order_good.Created_at = time.Now()
+		order_good.Updated_at = time.Now()
+		order_goods = append(order_goods, &order_good)
+		tx := global.DBLittleFish.Create(&order_good)
+		if tx.Error != nil {
+			return order, order_goods, tx.Error
+		}
+	}
+
+	return order, order_goods, tx.Error
 }

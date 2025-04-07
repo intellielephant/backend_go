@@ -43,8 +43,6 @@ func Router() *gin.Engine {
 	router.POST("/littlein/register_company", company.RegisterCompany)
 	router.POST("/littlein/register_store", company.RegisterStore)
 	router.POST("/littlein/create_note", company.CreateNote)
-	router.POST("/littlein/create_goods", company.CreateGoods)
-	router.POST("/littlein/select_goods", company.SelectGoods)
 
 	ai := controller.NewAIController()
 	router.POST("/ai/send_message", ai.SendMessage)
@@ -75,6 +73,7 @@ func Router() *gin.Engine {
 
 	fish := controller.NewFishController()
 	router.POST("/fish/add_goods", fish.AddGoods)
+	router.POST("/fish/add_order", fish.AddOrder)
 
 	return router
 }

@@ -9,7 +9,7 @@ package model
 
 import "time"
 
-type FishGoods struct {
+type Goods struct {
 	Id         int       `gorm:"primaryKey"`
 	Name       string    `json:"name"`
 	Status     int       `json:"status"`
@@ -23,7 +23,7 @@ type FishGoods struct {
 type FishOrder struct {
 	Id         int       `gorm:"primaryKey"`
 	Name       string    `json:"name"`
-	LoginType  string    `json:"login_type"`
+	Status     int       `json:"status"`
 	Created_at time.Time `json:"created_at"`
 	Updated_at time.Time `json:"updated_at"`
 }

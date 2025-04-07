@@ -16,7 +16,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func init() {
+func Init() {
 	err := global.SetupDBAI()
 	if err != nil {
 		log.Fatalf("init setup db engine err: %v", err)
@@ -47,6 +47,7 @@ func AuthMiddleware() gin.HandlerFunc {
 }
 
 func main() {
+	Init()
 	r := router.Router()
 	r.Use(AuthMiddleware())
 	r.Run(":8080")
