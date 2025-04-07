@@ -1,0 +1,23 @@
+version: "3.3"
+services:
+  aitoolbox:
+    image: aitoolbox
+    restart: always
+    environment:
+      - mysqlAddress=47.120.22.151
+      - GEMINI_API_KEY=AIzaSyBZB0tJIML8VK7WAFNawksdbtDbNd5Q6BQ
+      - OSS_ACCESS_KEY_ID=LTAI5tNDVBsuxC4C9V26dz6T
+      - OSS_ACCESS_KEY_SECRET=YXst7ALbB8BJh5ZHSLsCJ93eSvZOO8
+      - uploadsPath=/app/uploads
+    volumes:
+      - ./uploads:/app/uploads
+      
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    restart: always
+    command: --no-autoupdate tunnel run
+    environment:
+      - TUNNEL_TOKEN=eyJhIjoiNDZjY2FiNjBjMTQxZjA4ZWE2YWRjMTYxZTNiOWI1YTIiLCJ0IjoiMmI1NWZmODItMmY1ZS00NWJhLTllMzMtNzM5NTQxMDdjZmYwIiwicyI6IlpHVXlPRFF5TkRVdFpqRTNOUzAwTlRVeExXSXpaR0V0TW1SbFl6RmxOemhrWlRJMyJ9
+    volumes:
+      - ./cloudflared:/etc/cloudflared
