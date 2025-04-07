@@ -72,6 +72,10 @@ func Router() *gin.Engine {
 
 	oss := controller.NewOSSController()
 	router.POST("/oss/pushfile", oss.PushObject)
+
+	fish := controller.NewFishController()
+	router.POST("/fish/add_goods", fish.AddGoods)
+
 	return router
 }
 

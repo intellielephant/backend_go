@@ -27,6 +27,12 @@ func init() {
 		log.Fatalf("init setup db engine err: %v", err)
 		return
 	}
+
+	err = global.SetupDBFish()
+	if err != nil {
+		log.Fatalf("init setup db engine err: %v", err)
+		return
+	}
 }
 
 func AuthMiddleware() gin.HandlerFunc {

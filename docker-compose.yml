@@ -5,9 +5,9 @@ services:
     restart: always
     environment:
       - mysqlAddress=47.120.22.151
-      - GEMINI_API_KEY=AIzaSyBZB0tJIML8VK7WAFNawksdbtDbNd5Q6BQ
-      - OSS_ACCESS_KEY_ID=LTAI5tNDVBsuxC4C9V26dz6T
-      - OSS_ACCESS_KEY_SECRET=YXst7ALbB8BJh5ZHSLsCJ93eSvZOO8
+      # - GEMINI_API_KEY=AIzaSyBZB0tJIML8VK7WAFNawksdbtDbNd5Q6BQ
+      # - OSS_ACCESS_KEY_ID=LTAI5tNDVBsuxC4C9V26dz6T
+      # - OSS_ACCESS_KEY_SECRET=YXst7ALbB8BJh5ZHSLsCJ93eSvZOO8
       - uploadsPath=/app/uploads
     volumes:
       - ./uploads:/app/uploads

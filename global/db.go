@@ -17,8 +17,9 @@ import (
 )
 
 var (
-	DBAI       *gorm.DB
-	DBLittleIn *gorm.DB
+	DBAI         *gorm.DB
+	DBLittleIn   *gorm.DB
+	DBLittleFish *gorm.DB
 )
 
 func SetupDBAI() error {
@@ -28,6 +29,31 @@ func SetupDBAI() error {
 	dbAddress := "47.120.22.151"
 	//dbAddress := os.Getenv("mysqlAddress")
 	dbName := "toolbox"
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:3306)/%s?parseTime=true", userName, password, dbAddress, dbName)
+
+	DBAI, err = gorm.Open(mysql.New(mysql.Config{
+		DriverName: "mysql",
+		DSN:        dsn,
+	}), &gorm.Config{
+		NamingStrategy: schema.NamingStrategy{
+			SingularTable: true,
+		},
+	})
+
+	if err == nil {
+		return nil
+	} else {
+		return err
+	}
+}
+
+func SetupDBFish() error {
+	var err error
+	userName := "root"
+	password := "nupaeer"
+	dbAddress := "47.120.22.151"
+	//dbAddress := os.Getenv("mysqlAddress")
+	dbName := "fish"
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:3306)/%s?parseTime=true", userName, password, dbAddress, dbName)
 
 	DBAI, err = gorm.Open(mysql.New(mysql.Config{
