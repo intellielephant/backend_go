@@ -11,6 +11,13 @@ func AddGoods(goods *model.Goods) (*model.Goods, error) {
 	return goods, tx.Error
 }
 
+func GetGoods() ([]*model.Goods, error) {
+	var goods []*model.Goods
+	tx := global.DBLittleFish.Table("goods").Where("status = ?", 0).Find(&goods)
+
+	return goods, tx.Error
+}
+
 func AddOrder(order *model.FishOrder, goods_list []map[string]interface{}) (*model.FishOrder, []*model.OrderGoods, error) {
 	tx := global.DBLittleFish.Create(&order)
 

@@ -18,6 +18,10 @@ func AddGoods(name string, category int, price float64, image_url string) (*mode
 	return dao.AddGoods(&goods)
 }
 
+func GetGoods() ([]*model.Goods, error) {
+	return dao.GetGoods()
+}
+
 func AddOrder(table_name string, goods_list []map[string]interface{}) (*model.FishOrder, []*model.OrderGoods, error) {
 	var order model.FishOrder
 	order.Name = table_name

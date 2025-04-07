@@ -56,6 +56,24 @@ func (c *FishController) AddGoods(ctx *gin.Context) {
 	}
 }
 
+func (c *FishController) GetGoods(ctx *gin.Context) {
+	result := global.NewResult(ctx)
+	err := ctx.Request.ParseForm()
+	if err != nil {
+		log.Println("parse form error ", err)
+	}
+	formData := make(map[string]interface{})
+
+	json.NewDecoder(ctx.Request.Body).Decode(&formData)
+
+	goods_list, err := service.GetGoods()
+	if err != nil {
+		result.Error(404, "get goods fail")
+	} else {
+		result.Success(gin.H{"goods_list": goods_list})
+	}
+}
+
 func (c *FishController) UpdateGoods(ctx *gin.Context) {
 	result := global.NewResult(ctx)
 

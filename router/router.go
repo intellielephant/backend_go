@@ -73,6 +73,7 @@ func Router() *gin.Engine {
 
 	fish := controller.NewFishController()
 	router.POST("/fish/add_goods", fish.AddGoods)
+	router.POST("/fish/get_goods", fish.GetGoods)
 	router.POST("/fish/add_order", fish.AddOrder)
 
 	return router
