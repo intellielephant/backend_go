@@ -38,5 +38,5 @@ func GetOrderByTableName(table_name string) (*model.Order, []*model.OrderGoods, 
 }
 
 func GetGoodsCategory() ([]*model.Category, error) {
-	return dao.GetCategory()
+	return dao.GetGoodsCategory()
 }
