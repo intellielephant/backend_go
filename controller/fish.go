@@ -118,8 +118,14 @@ func (c *FishController) AddOrder(ctx *gin.Context) {
 	}
 
 	var goods_list []map[string]any
-	if value, ok := formData["goods_list"]; ok {
-		goods_list = value.([]map[string]any)
+	if goodsListValue, ok := formData["goods_list"]; ok {
+		if goodsList, ok := goodsListValue.([]interface{}); ok {
+			for _, v := range goodsList {
+				if goodsMap, ok := v.(map[string]interface{}); ok {
+					goods_list = append(goods_list, goodsMap)
+				}
+			}
+		}
 	}
 
 	order, order_goods, err := service.AddOrder(table_name, goods_list)

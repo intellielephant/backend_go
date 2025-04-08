@@ -27,14 +27,6 @@ type BaiduAccessToken struct {
 	ExpiresIn   int    `json:"expires_in"`
 }
 
-type Category struct {
-	Id          int       `gorm:"primaryKey"`
-	Name        string    `json:"name"`
-	Description string    `json:"description"`
-	Pic         string    `json:"pic"`
-	Created_at  time.Time `json:"created_at"`
-}
-
 type App struct {
 	Id          int       `gorm:"primaryKey"`
 	Name        string    `json:"name"`

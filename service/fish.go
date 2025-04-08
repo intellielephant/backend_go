@@ -22,9 +22,9 @@ func GetGoods() ([]*model.GoodsWithCategory, error) {
 	return dao.GetGoods()
 }
 
-func AddOrder(table_name string, goods_list []map[string]interface{}) (*model.FishOrder, []*model.OrderGoods, error) {
-	var order model.FishOrder
-	order.Name = table_name
+func AddOrder(table_name string, goods_list []map[string]interface{}) (*model.Order, []*model.OrderGoods, error) {
+	var order model.Order
+	order.TableName = table_name
 	order.Status = 0
 	order.Created_at = time.Now()
 	order.Updated_at = time.Now()

@@ -21,7 +21,7 @@ func GetGoods() ([]*model.GoodsWithCategory, error) {
 	return goodsWithCategory, tx.Error
 }
 
-func AddOrder(order *model.FishOrder, goods_list []map[string]interface{}) (*model.FishOrder, []*model.OrderGoods, error) {
+func AddOrder(order *model.Order, goods_list []map[string]interface{}) (*model.Order, []*model.OrderGoods, error) {
 	tx := global.DBLittleFish.Create(&order)
 
 	if tx.Error != nil {
@@ -32,8 +32,8 @@ func AddOrder(order *model.FishOrder, goods_list []map[string]interface{}) (*mod
 	for _, goods := range goods_list {
 		var order_good model.OrderGoods
 		order_good.OrderId = order.Id
-		order_good.GoodsId = goods["goods_id"].(int)
-		order_good.Number = goods["number"].(int)
+		order_good.GoodsId = int(goods["goods_id"].(float64))
+		order_good.Number = int(goods["number"].(float64))
 		order_good.Created_at = time.Now()
 		order_good.Updated_at = time.Now()
 		order_goods = append(order_goods, &order_good)

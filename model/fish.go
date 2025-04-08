@@ -25,15 +25,15 @@ type GoodsWithCategory struct {
 	CategoryName string `json:"category_name"`
 }
 
-type FishOrder struct {
+type Order struct {
 	Id         int       `gorm:"primaryKey"`
-	Name       string    `json:"name"`
+	TableName  string    `json:"table_name"`
 	Status     int       `json:"status"`
 	Created_at time.Time `json:"created_at"`
 	Updated_at time.Time `json:"updated_at"`
 }
 
-type FishCategory struct {
+type Category struct {
 	Id    int    `gorm:"primaryKey"`
 	Name  string `json:"name"`
 	Index int    `json:"index"`
