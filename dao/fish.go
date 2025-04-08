@@ -47,3 +47,20 @@ func AddOrder(order *model.Order, goods_list []map[string]interface{}) (*model.O
 
 	return order, order_goods, tx.Error
 }
+
+func GetOrderByTableName(table_name string) (*model.Order, []*model.OrderGoods, error) {
+
+	var order model.Order
+	tx := global.DBLittleFish.Table("order").Where("table_name = ? and status = 0", table_name).First(&order)
+
+	if tx.Error != nil {
+		return nil, nil, tx.Error
+	}
+
+	var order_goods []*model.OrderGoods
+	tx = global.DBLittleFish.Table("order_goods").Where("order_id = ?", order.Id).Find(&order_goods)
+	if tx.Error != nil {
+		return nil, nil, tx.Error
+	}
+	return &order, order_goods, tx.Error
+}

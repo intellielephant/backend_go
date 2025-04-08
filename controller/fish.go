@@ -136,6 +136,30 @@ func (c *FishController) AddOrder(ctx *gin.Context) {
 	}
 }
 
+func (c *FishController) GetOrderByTableName(ctx *gin.Context) {
+	result := global.NewResult(ctx)
+	err := ctx.Request.ParseForm()
+	if err != nil {
+		log.Println("parse form error ", err)
+	}
+	formData := make(map[string]interface{})
+
+	json.NewDecoder(ctx.Request.Body).Decode(&formData)
+
+	var table_name string
+
+	if value, ok := formData["table_name"]; ok {
+		table_name = value.(string)
+	}
+
+	order, order_goods, err := service.GetOrderByTableName(table_name)
+	if err != nil {
+		result.Error(404, "get order fail")
+	} else {
+		result.Success(gin.H{"order": order, "order_goods": order_goods})
+	}
+}
+
 func (c *FishController) UpdateOrder(ctx *gin.Context) {
 	result := global.NewResult(ctx)
 	err := ctx.Request.ParseForm()

@@ -31,3 +31,8 @@ func AddOrder(table_name string, goods_list []map[string]interface{}) (*model.Or
 	return dao.AddOrder(&order, goods_list)
 
 }
+
+func GetOrderByTableName(table_name string) (*model.Order, []*model.OrderGoods, error) {
+	return dao.GetOrderByTableName(table_name)
+
+}
