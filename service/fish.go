@@ -45,6 +45,10 @@ func GetGoodsCategory() ([]*model.Category, error) {
 	return dao.GetGoodsCategory()
 }
 
+func GetOrders(start_date time.Time, end_date time.Time) ([]*model.Order, error) {
+	return dao.GetOrders(start_date, end_date)
+}
+
 func MapToGoods(data map[string]interface{}) (model.Goods, error) {
 	var goods model.Goods
 

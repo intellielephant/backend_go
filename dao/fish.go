@@ -75,3 +75,9 @@ func GetGoodsCategory() ([]*model.Category, error) {
 	tx := global.DBLittleFish.Table("category").Order("`index` ASC").Find(&category)
 	return category, tx.Error
 }
+
+func GetOrders(start_date time.Time, end_date time.Time) ([]*model.Order, error) {
+	var orders []*model.Order
+	tx := global.DBLittleFish.Table("order").Where("created_at >= ? and created_at <= ?", start_date, end_date).Find(&orders)
+	return orders, tx.Error
+}

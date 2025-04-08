@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -160,6 +161,55 @@ func (c *FishController) GetOrderByTableName(ctx *gin.Context) {
 		result.Error(404, "get order fail")
 	} else {
 		result.Success(gin.H{"order": order, "order_goods": order_goods})
+	}
+}
+
+func (c *FishController) GetOrders(ctx *gin.Context) {
+	result := global.NewResult(ctx)
+	err := ctx.Request.ParseForm()
+	if err != nil {
+		log.Println("parse form error ", err)
+	}
+	formData := make(map[string]interface{})
+
+	json.NewDecoder(ctx.Request.Body).Decode(&formData)
+
+	var start_date time.Time
+	if value, ok := formData["start_date"]; ok {
+		if dateStr, ok := value.(string); ok {
+			layout := "2006-01-02 15:04:05" // 日期格式，例如 "YYYY-MM-DD"
+			start_date, err = time.Parse(layout, dateStr)
+			fmt.Println(start_date)
+			if err != nil {
+				result.Error(400, "Invalid date format")
+				return
+			}
+
+		} else {
+			fmt.Println(ok)
+		}
+	}
+
+	var end_date time.Time
+
+	if value, ok := formData["end_date"]; ok {
+		if dateStr, ok := value.(string); ok {
+			layout := "2006-01-02 15:04:05" // 日期格式，例如 "YYYY-MM-DD"
+			end_date, err = time.Parse(layout, dateStr)
+			fmt.Println(end_date)
+			if err != nil {
+				result.Error(400, "Invalid date format")
+				return
+			}
+
+		}
+	}
+	fmt.Println(start_date, end_date)
+	orders, err := service.GetOrders(start_date, end_date)
+	if err != nil {
+		result.Error(404, "get order fail")
+	} else {
+		result.Success(gin.H{"orders": orders})
 	}
 }
 
