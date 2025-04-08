@@ -213,6 +213,34 @@ func (c *FishController) GetOrders(ctx *gin.Context) {
 	}
 }
 
+func (c *FishController) UpdateOrder(ctx *gin.Context) {
+	result := global.NewResult(ctx)
+	err := ctx.Request.ParseForm()
+	if err != nil {
+		log.Println("parse form error ", err)
+	}
+	formData := make(map[string]interface{})
+
+	json.NewDecoder(ctx.Request.Body).Decode(&formData)
+
+	var id int
+	if value, ok := formData["id"]; ok {
+		id = int(value.(float64))
+	}
+
+	var status int
+	if value, ok := formData["status"]; ok {
+		status = int(value.(float64))
+	}
+
+	err = service.UpdateOrder(id, status)
+	if err != nil {
+		result.Error(404, "get order fail")
+	} else {
+		result.Success(gin.H{"success": true})
+	}
+}
+
 func (c *FishController) GetCategory(ctx *gin.Context) {
 	result := global.NewResult(ctx)
 	err := ctx.Request.ParseForm()
@@ -228,44 +256,5 @@ func (c *FishController) GetCategory(ctx *gin.Context) {
 		result.Error(404, "get order fail")
 	} else {
 		result.Success(gin.H{"categories": categories})
-	}
-}
-
-func (c *FishController) UpdateOrder(ctx *gin.Context) {
-	result := global.NewResult(ctx)
-	err := ctx.Request.ParseForm()
-	if err != nil {
-		log.Println("parse form error ", err)
-	}
-	formData := make(map[string]interface{})
-
-	json.NewDecoder(ctx.Request.Body).Decode(&formData)
-
-	var name string
-
-	if value, ok := formData["name"]; ok {
-		name = value.(string)
-	}
-
-	var category int
-	if value, ok := formData["category"]; ok {
-		category = value.(int)
-	}
-
-	var price float64
-	if value, ok := formData["price"]; ok {
-		price = value.(float64)
-	}
-
-	var image_url string
-	if value, ok := formData["image_url"]; ok {
-		image_url = value.(string)
-	}
-
-	goods, err := service.AddGoods(name, category, price, image_url)
-	if err != nil {
-		result.Error(404, "register company fail")
-	} else {
-		result.Success(gin.H{"goods": goods})
 	}
 }

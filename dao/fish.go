@@ -70,6 +70,11 @@ func UpdateGoods(goods model.Goods) error {
 	return tx.Error
 }
 
+func UpdateOrder(id int, status int) error {
+	tx := global.DBLittleFish.Table("order").Where("id = ?", id).Update("status", status)
+	return tx.Error
+}
+
 func GetGoodsCategory() ([]*model.Category, error) {
 	var category []*model.Category
 	tx := global.DBLittleFish.Table("category").Order("`index` ASC").Find(&category)

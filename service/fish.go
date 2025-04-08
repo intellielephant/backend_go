@@ -49,6 +49,10 @@ func GetOrders(start_date time.Time, end_date time.Time) ([]*model.Order, error)
 	return dao.GetOrders(start_date, end_date)
 }
 
+func UpdateOrder(id int, status int) error {
+	return dao.UpdateOrder(id, status)
+}
+
 func MapToGoods(data map[string]interface{}) (model.Goods, error) {
 	var goods model.Goods
 
