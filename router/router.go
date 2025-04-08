@@ -75,6 +75,7 @@ func Router() *gin.Engine {
 	router.POST("/fish/add_goods", fish.AddGoods)
 	router.POST("/fish/get_goods", fish.GetGoods)
 	router.POST("/fish/add_order", fish.AddOrder)
+	router.POST("/fish/get_category", fish.GetCategory)
 	router.POST("/fish/get_order_by_table_name", fish.GetOrderByTableName)
 
 	return router

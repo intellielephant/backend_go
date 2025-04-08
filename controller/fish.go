@@ -160,6 +160,24 @@ func (c *FishController) GetOrderByTableName(ctx *gin.Context) {
 	}
 }
 
+func (c *FishController) GetCategory(ctx *gin.Context) {
+	result := global.NewResult(ctx)
+	err := ctx.Request.ParseForm()
+	if err != nil {
+		log.Println("parse form error ", err)
+	}
+	formData := make(map[string]interface{})
+
+	json.NewDecoder(ctx.Request.Body).Decode(&formData)
+
+	categories, err := service.GetGoodsCategory()
+	if err != nil {
+		result.Error(404, "get order fail")
+	} else {
+		result.Success(gin.H{"categories": categories})
+	}
+}
+
 func (c *FishController) UpdateOrder(ctx *gin.Context) {
 	result := global.NewResult(ctx)
 	err := ctx.Request.ParseForm()
