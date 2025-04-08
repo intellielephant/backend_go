@@ -65,6 +65,11 @@ func GetOrderByTableName(table_name string) (*model.Order, []*model.OrderGoods, 
 	return &order, order_goods, tx.Error
 }
 
+func UpdateGoods(goods model.Goods) error {
+	tx := global.DBLittleFish.Table("goods").Where("id = ?", goods.Id).Updates(&goods)
+	return tx.Error
+}
+
 func GetGoodsCategory() ([]*model.Category, error) {
 	var category []*model.Category
 	tx := global.DBLittleFish.Table("category").Order("`index` ASC").Find(&category)

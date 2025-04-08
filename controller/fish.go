@@ -2,9 +2,10 @@ package controller
 
 import (
 	"backend-svc-go/global"
+	"backend-svc-go/model"
 	"backend-svc-go/service"
 	"encoding/json"
-	"io/ioutil"
+	"fmt"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -76,28 +77,30 @@ func (c *FishController) GetGoods(ctx *gin.Context) {
 
 func (c *FishController) UpdateGoods(ctx *gin.Context) {
 	result := global.NewResult(ctx)
-
-	file, err := ctx.FormFile("file")
-
+	err := ctx.Request.ParseForm()
 	if err != nil {
-		result.Error(400, "get file fail"+err.Error())
+		log.Println("parse form error ", err)
 	}
+	formData := make(map[string]interface{})
 
-	src, err := file.Open()
-	if err != nil {
-		result.Error(400, "open file fail"+err.Error())
+	json.NewDecoder(ctx.Request.Body).Decode(&formData)
+
+	var goods model.Goods
+	if value, ok := formData["goods"]; ok {
+		if goodsMap, ok := value.(map[string]interface{}); ok {
+			goods, err = service.MapToGoods(goodsMap)
+			if err != nil {
+				result.Error(400, "invalid goods data")
+				return
+			}
+		}
 	}
-	defer src.Close()
-	fileBytes, err := ioutil.ReadAll(src)
+	fmt.Println(goods)
+	err = service.UpdateGoods(goods)
 	if err != nil {
-		result.Error(400, "read object fail"+err.Error())
-		return
-	}
-	fileURL, err := service.PushObject(fileBytes, file.Filename)
-	if err != nil {
-		result.Error(400, "put object fail"+err.Error())
+		result.Error(404, "register company fail"+err.Error())
 	} else {
-		result.Success(gin.H{"file": fileURL})
+		result.Success(gin.H{"success": true})
 	}
 }
 

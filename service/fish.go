@@ -22,6 +22,10 @@ func GetGoods() ([]*model.GoodsWithCategory, error) {
 	return dao.GetGoods()
 }
 
+func UpdateGoods(goods model.Goods) error {
+	return dao.UpdateGoods(goods)
+}
+
 func AddOrder(table_name string, goods_list []map[string]interface{}) (*model.Order, []*model.OrderGoods, error) {
 	var order model.Order
 	order.TableName = table_name
@@ -39,4 +43,30 @@ func GetOrderByTableName(table_name string) (*model.Order, []*model.OrderGoods, 
 
 func GetGoodsCategory() ([]*model.Category, error) {
 	return dao.GetGoodsCategory()
+}
+
+func MapToGoods(data map[string]interface{}) (model.Goods, error) {
+	var goods model.Goods
+
+	// 手动映射字段
+	if value, ok := data["id"]; ok {
+		goods.Id = int(value.(float64)) // 假设 id 是 float64 类型
+	}
+	if value, ok := data["name"]; ok {
+		goods.Name = value.(string)
+	}
+	if value, ok := data["category"]; ok {
+		goods.Category = int(value.(float64)) // 假设 category 是 float64 类型
+	}
+	if value, ok := data["price"]; ok {
+		goods.Price = value.(float64)
+	}
+	if value, ok := data["image_url"]; ok {
+		goods.Image_url = value.(string)
+	}
+	if value, ok := data["status"]; ok {
+		goods.Status = int(value.(float64)) // 假设 status 是 float64 类型
+	}
+
+	return goods, nil
 }
