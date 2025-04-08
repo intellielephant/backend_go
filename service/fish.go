@@ -49,7 +49,7 @@ func MapToGoods(data map[string]interface{}) (model.Goods, error) {
 	var goods model.Goods
 
 	// 手动映射字段
-	if value, ok := data["id"]; ok {
+	if value, ok := data["Id"]; ok {
 		goods.Id = int(value.(float64)) // 假设 id 是 float64 类型
 	}
 	if value, ok := data["name"]; ok {
