@@ -35,6 +35,7 @@ func AddOrder(order *model.Order, goods_list []map[string]interface{}) (*model.O
 		order_good.GoodsId = int(goods["goods_id"].(float64))
 		order_good.GoodsName = goods["goods_name"].(string)
 		order_good.Number = int(goods["number"].(float64))
+		order_good.Price = goods["price"].(float64)
 		order_good.Created_at = time.Now()
 		order_good.Updated_at = time.Now()
 		order_goods = append(order_goods, &order_good)

@@ -44,6 +44,7 @@ type OrderGoods struct {
 	OrderId    int       `json:"order_id"`
 	GoodsId    int       `json:"goods_id"`
 	GoodsName  string    `json:"goods_name"`
+	Price      float64   `json:"price"`
 	Number     int       `json:"number"`
 	Created_at time.Time `json:"created_at"`
 	Updated_at time.Time `json:"updated_at"`
