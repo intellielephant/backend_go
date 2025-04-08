@@ -1,1 +1,1 @@
-docker stop aitoolbox && docker rm aitoolbox && docker rmi aitoolbox && docker build -t aitoolbox:latest . && docker run -itd -p 8086:8080 -e mysqlAddress=47.120.22.151 -e GEMINI_API_KEY=AIzaSyBZB0tJIML8VK7WAFNawksdbtDbNd5Q6BQ -e uploadsPath=/app/uploads -e OSS_ACCESS_KEY_ID=LTAI5tNDVBsuxC4C9V26dz6T -e OSS_ACCESS_KEY_SECRET=YXst7ALbB8BJh5ZHSLsCJ93eSvZOO8 --name aitoolbox aitoolbox:latest
+docker stop backend-common && docker rm backend-common && docker build -t backend-common:latest . && docker run -itd -p 8090:8080 --name backend-common backend-common:latest
