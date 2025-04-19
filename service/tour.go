@@ -18,3 +18,13 @@ func GetProductByID(id int) (*model.TourProducts, error) {
 	}
 	return product, nil
 }
+
+// GetProductsByCategory 根据分类查询产品
+func GetProductsByCategory(category string) ([]model.TourProducts, error) {
+	return dao.GetProductsByCategory(category)
+}
+
+// CreateCategory 保存分类到数据库
+func CreateCategory(category *model.TourCategory) error {
+	return dao.CreateCategory(category)
+}

@@ -64,6 +64,8 @@ func Router() *gin.Engine {
 	tour := controller.NewTourController()
 	router.POST("/tour/create_product", tour.CreateProduct)
 	router.GET("/tour/get_product_by_id/:id", tour.GetProductByID)
+	router.GET("/tour/get_products_by_category", tour.GetProductsByCategory)
+	router.POST("/tour/create_category", tour.CreateCategory)
 
 	return router
 }

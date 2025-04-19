@@ -4,7 +4,6 @@ import (
 	"backend-svc-go/global"
 	"backend-svc-go/model"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -131,7 +130,6 @@ func (pc *TourController) GetProductByID(ctx *gin.Context) {
 	// 获取 URL 参数中的 id
 	id := ctx.Param("id")
 
-	fmt.Println(id)
 	// 将 id 转换为整数
 	intID, err := strconv.Atoi(id)
 	if err != nil {
@@ -154,5 +152,66 @@ func (pc *TourController) GetProductByID(ctx *gin.Context) {
 	result.Success(gin.H{
 		"message": "Product fetched successfully",
 		"product": product,
+	})
+}
+
+// GetProductsByCategory handles fetching products by category
+func (pc *TourController) GetProductsByCategory(ctx *gin.Context) {
+	result := global.NewResult(ctx)
+
+	// 获取查询参数中的 category
+	category := ctx.Query("category")
+	if category == "" {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": "Category parameter is required",
+		})
+		return
+	}
+
+	// 查询产品
+	products, err := service.GetProductsByCategory(category)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Failed to fetch products: " + err.Error(),
+		})
+		return
+	}
+
+	// 返回成功响应
+	result.Success(gin.H{
+		"message":  "Products fetched successfully",
+		"products": products,
+	})
+}
+
+// CreateCategory handles the creation of a new category
+func (pc *TourController) CreateCategory(ctx *gin.Context) {
+	result := global.NewResult(ctx)
+
+	// 解析请求体
+	var category model.TourCategory
+	if err := ctx.ShouldBindJSON(&category); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid request data: " + err.Error(),
+		})
+		return
+	}
+
+	// 设置创建时间和更新时间
+	category.CreatedAt = time.Now()
+	category.UpdatedAt = time.Now()
+
+	// 调用服务层保存分类
+	if err := service.CreateCategory(&category); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Failed to create category: " + err.Error(),
+		})
+		return
+	}
+
+	// 返回成功响应
+	result.Success(gin.H{
+		"message":  "Category created successfully",
+		"category": category,
 	})
 }
