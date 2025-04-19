@@ -22,13 +22,14 @@ func Init() {
 		log.Fatalf("init setup db engine err: %v", err)
 		return
 	}
-	err = global.SetupDBLittleIn()
+
+	err = global.SetupDBFish()
 	if err != nil {
 		log.Fatalf("init setup db engine err: %v", err)
 		return
 	}
 
-	err = global.SetupDBFish()
+	err = global.SetupDBTour()
 	if err != nil {
 		log.Fatalf("init setup db engine err: %v", err)
 		return

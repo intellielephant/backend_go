@@ -18,8 +18,8 @@ import (
 
 var (
 	DBAI         *gorm.DB
-	DBLittleIn   *gorm.DB
 	DBLittleFish *gorm.DB
+	DBTour       *gorm.DB
 )
 
 func SetupDBAI() error {
@@ -72,16 +72,16 @@ func SetupDBFish() error {
 	}
 }
 
-func SetupDBLittleIn() error {
+func SetupDBTour() error {
 	var err error
 	userName := "root"
 	password := "nupaeer"
-	dbAddress := "43.143.115.245"
+	dbAddress := "47.120.22.151"
 	// dbAddress := os.Getenv("mysqlAddress")
-	dbName := "littlein"
+	dbName := "travel"
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:3306)/%s?parseTime=true", userName, password, dbAddress, dbName)
 
-	DBLittleIn, err = gorm.Open(mysql.New(mysql.Config{
+	DBTour, err = gorm.Open(mysql.New(mysql.Config{
 		DriverName: "mysql",
 		DSN:        dsn,
 	}), &gorm.Config{

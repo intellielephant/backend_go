@@ -33,8 +33,8 @@ func (r *Result) Success(data interface{}) {
 	}
 	res := ResultContent{}
 	res.Code = 0
-	res.Msg = ""
 	res.Data = data
+	res.Msg = "success"
 	r.Ctx.JSON(http.StatusOK, res)
 }
 

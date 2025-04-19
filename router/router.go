@@ -39,27 +39,6 @@ func Router() *gin.Engine {
 	hello := controller.HelloWorld
 	router.GET("/hello", hello)
 
-	company := controller.NewCompanyController()
-	router.POST("/littlein/register_company", company.RegisterCompany)
-	router.POST("/littlein/register_store", company.RegisterStore)
-	router.POST("/littlein/create_note", company.CreateNote)
-
-	ai := controller.NewAIController()
-	router.POST("/ai/send_message", ai.SendMessage)
-	router.POST("/ai/get_function", ai.GetFunction)
-	router.POST("/ai/quick_login", ai.QuickLogin)
-	router.POST("/ai/get_baidu_access_token", ai.GetBaiduAccessToken)
-	router.POST("/ai/user_phone_login", ai.UserPhoneLogin)
-
-	router.POST("/ai/user_weixin_login", ai.UserWeixinLogin)
-
-	// ai toolbox
-	router.POST("/ai/get_category", ai.GetCategory)
-	router.POST("/ai/get_hot", ai.GetHotApp)
-	router.POST("/ai/get_app_by_categoryid", ai.GetAppByCategoryID)
-	router.POST("/ai/update_avatar", ai.UpdateAvatar)
-	router.POST("/ai/predict", ai.Predict)
-
 	gemini := controller.NewGeminiController()
 	router.POST("/gemini/gen_content", gemini.GenerateContent)
 	router.POST("/gemini/summary_file", gemini.SummaryFile)
@@ -81,6 +60,10 @@ func Router() *gin.Engine {
 	router.POST("/fish/get_category", fish.GetCategory)
 	router.POST("/fish/get_order_by_table_name", fish.GetOrderByTableName)
 	router.POST("/fish/get_orders", fish.GetOrders)
+
+	tour := controller.NewTourController()
+	router.POST("/tour/create_product", tour.CreateProduct)
+	router.GET("/tour/get_product_by_id/:id", tour.GetProductByID)
 
 	return router
 }
